@@ -28,3 +28,6 @@ __pycache__/
 
 # Ignore all .pyc files
 *.pyc
+
+# Environment files
+.env
