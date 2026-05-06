@@ -24,12 +24,12 @@ class RoleType(Enum):
 
 
 class ModelType(Enum):
-    GPT_3_5_TURBO = "gpt-3.5-turbo-1106"
-    GPT_3_5_TURBO_16K = "gpt-3.5-turbo-1106"
-    GPT_4 = "gpt-4"
-    GPT_4_32K = "gpt-4-32k"
-    GPT_4_TURBO = "gpt-4-1106-preview"
-    GPT_4_TURBO_VISION = "gpt-4-vision-preview"
+    GPT_3_5_TURBO = "openai/gpt-3.5-turbo"
+    GPT_3_5_TURBO_16K = "openai/gpt-3.5-turbo"
+    GPT_4 = "openai/gpt-4"
+    GPT_4_32K = "openai/gpt-4-32k"
+    GPT_4_TURBO = "openai/gpt-4-turbo"
+    GPT_4_TURBO_VISION = "openai/gpt-4-vision-preview"
 
     STUB = "stub"
 
@@ -39,7 +39,9 @@ class ModelType(Enum):
 
     @property
     def value_for_tiktoken(self) -> str:
-        return self.value if self.name != "STUB" else "gpt-3.5-turbo"
+        # Strip openai/ prefix — tiktoken uses bare model names
+        v = self.value if self.name != "STUB" else "gpt-3.5-turbo"
+        return v.replace("openai/", "")
 
     @property
     def is_openai(self) -> bool:
